@@ -1,4 +1,4 @@
-package com.example;
+package com.example.domain;
 
 import lombok.*;
 
@@ -10,7 +10,6 @@ import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Getter
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
@@ -20,10 +19,12 @@ public class Contact {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @Getter
     private long id;
 
     @NonNull
-    private String firstname;
+    @Setter
+    private String firstName;
 
     @NonNull
     private Date birthdate;

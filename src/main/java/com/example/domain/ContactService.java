@@ -1,8 +1,9 @@
-package com.example;
+package com.example.domain;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class ContactService {
@@ -13,10 +14,11 @@ public class ContactService {
         this.em = someEntityManager;
     }
 
+
     public void save(Contact c) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.persist(c);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
     }
 
     public Contact find(long id){
@@ -38,10 +40,25 @@ public class ContactService {
     public void delete(long id){
         Contact contact = find(id);
         if(contact!=null) {
-            em.getTransaction().begin();
+//            em.getTransaction().begin();
             em.remove(contact);
-            em.getTransaction().commit();
+//            em.getTransaction().commit();
         }
+    }
+
+    public Contact updateFirstName(Contact c, String newFirstName){
+//        em.getTransaction().begin();
+        c.setFirstName(newFirstName);
+//        em.getTransaction().commit();
+        return c;
+    }
+
+    public Contact updateFirstName(long id, String newFirstName){
+        Contact contact = find(id);
+//        em.getTransaction().begin();
+        contact.setFirstName(newFirstName);
+//        em.getTransaction().commit();
+        return contact;
     }
 
 //    ....

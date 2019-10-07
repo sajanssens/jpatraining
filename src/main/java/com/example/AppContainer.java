@@ -2,16 +2,26 @@ package com.example;
 
 import com.example.domain.Contact;
 import com.example.domain.ContactService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.Date;
 
-public class App {
+@SpringBootApplication
+public class AppContainer implements CommandLineRunner {
 
+    @PersistenceContext
+    private EntityManager em;
 
     public static void main(String[] args) {
-        EntityManager em = Persistence.createEntityManagerFactory("JPATraining").createEntityManager();
+        SpringApplication.run(AppContainer.class, args);
+    }
+
+    public void test() {
         ContactService service = new ContactService(em);
 
         Contact bram = new Contact("Bram", new Date());
@@ -33,8 +43,6 @@ public class App {
         System.out.println("findAllNamed");
         service.findAllNamed().forEach(System.out::println);
 
-        em.clear();
-
         Contact piet = service.updateFirstName(bram, "Piet");
         System.out.println(piet);
 
@@ -42,5 +50,11 @@ public class App {
         System.out.println(contact1);
 
 
+    }
+
+    @Override
+    @Transactional
+    public void run(String... args) throws Exception {
+        test();
     }
 }
