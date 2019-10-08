@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -51,6 +52,11 @@ public class Contact {
 
     @Embedded
     private Address address;
+
+    @Setter
+    @ManyToOne(cascade = {PERSIST, MERGE})
+    @JoinColumn(name = "DEPT_BOSS_ID")
+    private Department bossOf;
 
     public Contact(String firstName, Date date, String email) {
         this.firstName = firstName;

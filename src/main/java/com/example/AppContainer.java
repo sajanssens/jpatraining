@@ -3,6 +3,7 @@ package com.example;
 import com.example.domain.Address;
 import com.example.domain.Contact;
 import com.example.domain.ContactService;
+import com.example.domain.Department;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -66,6 +67,16 @@ public class AppContainer implements CommandLineRunner {
 
         Contact contact1 = service.find(1);
         System.out.println(contact1);
+
+        Department kenniscentrum = Department.builder().name("Kenniscentrum").build();
+        bram.setBossOf(kenniscentrum);
+        service.update(bram);
+
+        Department systeembeheer = Department.builder().name("Systeembeheer").build();
+        bram.setBossOf(systeembeheer);
+        service.update(bram);
+
+
 
     }
 

@@ -17,6 +17,10 @@ public class ContactService {
         em.persist(c);
     }
 
+    public Contact update(Contact c) {
+        return em.merge(c);
+    }
+
     public Contact find(long id) {
         return em.find(Contact.class, id);
     }
@@ -49,6 +53,10 @@ public class ContactService {
         Contact contact = find(id);
         contact.setFirstName(newFirstName);
         return contact;
+    }
+
+    public void save(Department d) {
+        em.persist(d);
     }
 
 //    ....
