@@ -21,6 +21,11 @@ public class ContactService {
         return em.merge(c);
     }
 
+    public void removeCar(Contact c) {
+        c.setLeaseCar(null);
+        update(c);
+    }
+
     public Contact find(long id) {
         return em.find(Contact.class, id);
     }
@@ -57,6 +62,10 @@ public class ContactService {
 
     public void save(Department d) {
         em.persist(d);
+    }
+
+    public void save(Car c) {
+        em.persist(c);
     }
 
 //    ....

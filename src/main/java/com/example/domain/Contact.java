@@ -3,7 +3,7 @@ package com.example.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
@@ -30,8 +30,8 @@ public class Contact {
     private String firstName;
 
     @NonNull
-    @Temporal(value = TemporalType.TIME)
-    private Date birthdate;
+//    @Temporal(value = TemporalType.TIME)
+    private LocalDate birthdate;
 
     @NonNull
     @Column(unique = true, length = 255)
@@ -58,11 +58,14 @@ public class Contact {
     @JoinColumn(name = "DEPT_BOSS_ID")
     private Department bossOf;
 
-    @Setter
-    @ManyToOne(cascade = MERGE)
-    private ParkingSpace parkeerplaats;
+    @ManyToOne(cascade = {PERSIST, MERGE})
+    private ParkingSpace parkingSpace;
 
-    public Contact(String firstName, Date date, String email) {
+    @Setter
+    @OneToOne(cascade = MERGE, orphanRemoval = true)
+    private Car leaseCar;
+
+    public Contact(String firstName, LocalDate date, String email) {
         this.firstName = firstName;
         this.birthdate = date;
         this.email = email;
@@ -70,5 +73,15 @@ public class Contact {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public void setParkingSpace(ParkingSpace parkeerplaats) {
+        ParkingSpace oldOne = this.parkingSpace;
+        if (oldOne != null) {
+            oldOne.removeContact(this);
+        }
+
+        this.parkingSpace = parkeerplaats;
+        parkeerplaats.addContact(this);
     }
 }

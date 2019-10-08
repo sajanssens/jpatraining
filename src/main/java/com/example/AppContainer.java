@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Date;
 
 @SpringBootApplication
@@ -29,7 +30,7 @@ public class AppContainer implements CommandLineRunner {
 
         Contact bram = Contact.builder()
                 .firstName("Bram")
-                .birthdate(new Date())
+                .birthdate(LocalDate.of(1979, 8, 22))
                 .email("s.a.janssens@gmail.com")
                 .hasDriversLicense(true)
                 .resume("dsfhksd fhksdfh ksdjfhksd fhuis fhdiusdh fius hdfiu hsdifushfd ius dhfi fsdisufh uis")
@@ -39,11 +40,11 @@ public class AppContainer implements CommandLineRunner {
 
         System.out.println(bram);
         service.save(bram);
-
         Contact contact2 = service.find(bram.getId());
         System.out.println(contact2);
-        service.save(new Contact("A", new Date(), "s.a.janssens2@gmail.com"));
-        service.save(new Contact("X", new Date(), "s.a.janssens3@gmail.com"));
+
+        Contact arie = new Contact("Arie", LocalDate.of(2010, 1, 2), "arie@gmail.com");
+        service.save(arie);
 
         long idBram = bram.getId();
 
@@ -67,15 +68,28 @@ public class AppContainer implements CommandLineRunner {
 
         Department kenniscentrum = Department.builder().name("Kenniscentrum").build();
         bram.setBossOf(kenniscentrum);
-        service.update(bram);
+        service.update(piet);
 
         Department systeembeheer = Department.builder().name("Systeembeheer").build();
         bram.setBossOf(systeembeheer);
-        service.update(bram);
+        service.update(piet);
 
         ParkingSpace space = ParkingSpace.of(4);
-        bram.setParkeerplaats(space);
-        service.update(bram);
+        bram.setParkingSpace(space);
+        service.update(piet);
+
+        ParkingSpace space2 = ParkingSpace.of(6);
+        bram.setParkingSpace(space2);
+        service.update(piet);
+
+        Car skoda = new Car("Skoda");
+        piet.setLeaseCar(skoda);
+        service.update(piet);
+
+//        piet.setLeaseCar(null);
+//        service.update(piet);
+        service.removeCar(piet);
+
     }
 
     @Override
