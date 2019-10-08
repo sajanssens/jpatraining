@@ -76,8 +76,6 @@ public class AppContainer implements CommandLineRunner {
         bram.setBossOf(systeembeheer);
         service.update(bram);
 
-
-
     }
 
     @Override

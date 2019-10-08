@@ -1,9 +1,6 @@
 package com.example.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Value;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,12 +10,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Builder
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department {
-
-    @Id @GeneratedValue(strategy = IDENTITY)
-    private long id;
+public class Department extends AbstractEntity{
 
     private String name;
 }
