@@ -1,9 +1,6 @@
 package com.example;
 
-import com.example.domain.Address;
-import com.example.domain.Contact;
-import com.example.domain.ContactService;
-import com.example.domain.Department;
+import com.example.domain.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -76,6 +73,9 @@ public class AppContainer implements CommandLineRunner {
         bram.setBossOf(systeembeheer);
         service.update(bram);
 
+        ParkingSpace space = ParkingSpace.of(4);
+        bram.setParkeerplaats(space);
+        service.update(bram);
     }
 
     @Override

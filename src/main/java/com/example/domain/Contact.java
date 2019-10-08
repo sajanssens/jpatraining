@@ -58,6 +58,10 @@ public class Contact {
     @JoinColumn(name = "DEPT_BOSS_ID")
     private Department bossOf;
 
+    @Setter
+    @ManyToOne(cascade = MERGE)
+    private ParkingSpace parkeerplaats;
+
     public Contact(String firstName, Date date, String email) {
         this.firstName = firstName;
         this.birthdate = date;

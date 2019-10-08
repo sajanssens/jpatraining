@@ -13,7 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department extends AbstractEntity{
+public class Department extends AbstractEntity {
 
     private String name;
 }
